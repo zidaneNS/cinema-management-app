@@ -1,30 +1,44 @@
 package option;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class OptionMain {
+    static Scanner scanner = new Scanner(System.in);
     static public int getPerson(){
-        Scanner scanner = new Scanner(System.in);
         
         System.out.println("1.\tAdmin\n2.\tUser");
         System.out.print("Who are you loggin as : ");
 
-        return scanner.nextInt();
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Input number u fool");
+            return -1;
+        }
     }
     
     static public int getAdminOpt(){
-        Scanner scanner = new Scanner(System.in);
         System.out.println("1.\tAdd Movie\n2.\tDelete Movie");
         System.out.println("What will u modify?");
         
-        return scanner.nextInt();
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Input number u fool");
+            return -1;
+        }
     }
     
     static public int getUseropt(){
-        Scanner scanner = new Scanner(System.in);
         System.out.println("This will be the list of movies");
         System.out.println("Choose movie you'll watch : ");
         
-        return scanner.nextInt();
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Input number u fool");
+            return -1;
+        }
     }
 }
