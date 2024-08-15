@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Connect",
+      "request": "launch",
+      "mainClass": "controllers.Connect",
+      "projectName": "cinema-management_20cdf586"
+    },
+    {
+      "type": "java",
       "name": "Ticket",
       "request": "launch",
       "mainClass": "object.Ticket",

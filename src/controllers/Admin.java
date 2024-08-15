@@ -1,15 +1,24 @@
 package controllers;
 
 import java.util.Scanner;
+
+import object.Ticket;
+
+// import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 public class Admin {
+    static Scanner scanner = new Scanner(System.in);
+    static Connect connect = new Connect();
 
     public static void main(String[] args) {
-        new Admin().handleDelete();
+        System.err.println("Movie Lists : ");
+        for(int i=0; i<connect.getAllData().size(); i++){
+            System.out.println((i+1) + ". " + connect.getAllData().get(i));
+        }
+        new Admin().handleCreate();
     }
 
-    static Scanner scanner = new Scanner(System.in);
 
     public void handleCreate(){
         System.out.print("Input title : ");
@@ -23,7 +32,7 @@ public class Admin {
         try {
             regAmount = scanner.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("Input number bruh : " + e);// TODO: handle exception
+            System.out.println("Input number bruh : " + e);
             scanner.next();
         }
         
@@ -32,12 +41,15 @@ public class Admin {
         try {
             vipAmount = scanner.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("Input number bruh : " + e);// TODO: handle exception
+            System.out.println("Input number bruh : " + e);
         }
 
-        // this will be create movie method
         if ( regAmount != -1 && vipAmount != -1){
-            System.out.printf("\ntitle : %s\ntime : %s\nreg : %d\nvip : %d",movieTitle,showTime,regAmount,vipAmount);
+            System.out.printf("\ntitle : %s\ntime : %s\nreg : %d\nvip : %d\n",movieTitle,showTime,regAmount,vipAmount);
+            Ticket newMovie = new Ticket(movieTitle, showTime, regAmount, vipAmount);
+            
+            // save movie to database
+            connect.addToDB(newMovie.toString());
         } else {
             System.out.println("Do u understand english ? ");
         }
@@ -49,7 +61,7 @@ public class Admin {
         try {
             idDel = scanner.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("Input number bruh : " + e);// TODO: handle exception
+            System.out.println("Input number bruh : " + e);
         }
 
         if ( idDel != -1) {

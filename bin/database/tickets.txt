@@ -1,2 +1,2 @@
-test,12.00 WIB
-test,12.00 WIB
+Mas Pool,12.00 WIB,40,20
+Mbak Pool,13.00 WIB,30,5

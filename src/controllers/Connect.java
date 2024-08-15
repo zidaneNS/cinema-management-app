@@ -1,14 +1,22 @@
 package controllers;
 
 import java.io.*;
+import java.util.ArrayList;
+// import java.util.Scanner;
 
 public class Connect {
+    
+    public static void main(String[] args) {
+        System.out.println(new Connect().getAllData().toString());
+    }
+    
     static FileWriter fileWriter;
     static BufferedWriter bufferedWriter;
-
-    public void addToDB(String file, String data) {
-        String filePath = "C:\\Users\\Lenovo\\Documents\\dani\\programmerthings\\tutor java\\pjbl\\cinema-management\\bin\\database\\" + file;
-
+    static FileReader fileReader;
+    static BufferedReader bufferedReader;
+    static String filePath = "C:\\Users\\Lenovo\\Documents\\dani\\programmerthings\\tutor java\\pjbl\\cinema-management\\bin\\database\\tickets.txt";
+    
+    public void addToDB(String data) {
         try {
             // Membuka file dalam mode append (true)
             fileWriter = new FileWriter(filePath, true);
@@ -30,6 +38,30 @@ public class Connect {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @SuppressWarnings("finally")
+    public ArrayList<String> getAllData(){
+        ArrayList<String> result = new ArrayList<>();
+        try {
+            fileReader = new FileReader(filePath);
+            bufferedReader = new BufferedReader(fileReader);
+            String rawData;
+
+            // menganalisi tiap baris
+            while((rawData = bufferedReader.readLine()) != null){
+                String[] data = rawData.split(",");
+                String movieDetail = String.join(" | ", data[0],data[1]);
+
+                // menambahkan title dan waktu saja
+                result.add(movieDetail);
+            }
+
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally {
+            return result;
         }
     }
 }

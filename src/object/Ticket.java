@@ -1,27 +1,25 @@
 package object;
 
-import controllers.Connect;
-
 public class Ticket {
 
-    public static void main(String[] args) {
-        RTicket test = new RTicket("test","12.00 WIB");
-        test.setAmount(10);
-        Connect connect = new Connect();
-
-        connect.addToDB("rtickets.txt", test.toString());
-    }
-
-    private int amount;
+    private int amountReg;
+    private int amountVip;
     private String movieName;
     private String showTime;
 
-    public Ticket(String name, String time){
+    public Ticket(String name, String time, int reg, int vip){
         this.movieName = name;
         this.showTime = time;
+        this.amountReg = reg;
+        this.amountVip = vip;
     }
-    public void setAmount(int amount){
-        this.amount = amount;
+
+    // membuat enkapsulasi
+    public void setAmountReg(int amount){
+        this.amountReg = amount;
+    }
+    public void setAmountVip(int amount){
+        this.amountVip = amount;
     }
     public void setMovieName(String name){
         this.movieName = name;
@@ -29,8 +27,11 @@ public class Ticket {
     public void setShowTime(String time){
         this.showTime = time;
     }
-    public int getAmount(){
-        return this.amount;
+    public int getAmountReg(){
+        return this.amountReg;
+    }
+    public int getAmountVip(){
+        return this.amountVip;
     }
     public String getMovieName(){
         return this.movieName;
@@ -38,10 +39,13 @@ public class Ticket {
     public String getShowTime(){
         return this.showTime;
     }
-    public void getTicket(){
-        this.amount--;
+    public void getReg(){
+        this.amountReg--;
+    }
+    public void getVip(){
+        this.amountVip--;
     }
     public String toString(){
-        return String.join(",", getMovieName(),getShowTime());
+        return String.join(",", getMovieName(),getShowTime(),Integer.toString(getAmountReg()),Integer.toString(getAmountVip()));
     }
 }
