@@ -2,35 +2,30 @@ package controllers;
 
 import java.io.*;
 import java.util.ArrayList;
-// import java.util.Scanner;
 
 public class Connect {
     
     public static void main(String[] args) {
-        System.out.println(new Connect().getAllData().toString());
+        new Connect().deleteData(2);
     }
     
     static FileWriter fileWriter;
     static BufferedWriter bufferedWriter;
     static FileReader fileReader;
     static BufferedReader bufferedReader;
-    static String filePath = "C:\\Users\\Lenovo\\Documents\\dani\\programmerthings\\tutor java\\pjbl\\cinema-management\\bin\\database\\tickets.txt";
+    static String filePath="C:\\Users\\Lenovo\\Documents\\dani\\programmerthings\\tutor java\\pjbl\\cinema-management\\bin\\database\\tickets.txt";
     
     public void addToDB(String data) {
         try {
-            // Membuka file dalam mode append (true)
             fileWriter = new FileWriter(filePath, true);
             bufferedWriter = new BufferedWriter(fileWriter);
-
-            // Menulis data ke file dan menambahkan newline
             bufferedWriter.append(data);
-            bufferedWriter.newLine();  // Ini memastikan data baru ditulis di baris baru
+            bufferedWriter.newLine(); 
             bufferedWriter.flush();
-            System.out.println("data successfully added !");
+            System.out.println("Data successfully added!");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            // Menutup bufferedWriter untuk memastikan tidak ada kebocoran sumber daya
             try {
                 if (bufferedWriter != null) {
                     bufferedWriter.close();
@@ -41,27 +36,83 @@ public class Connect {
         }
     }
 
-    @SuppressWarnings("finally")
-    public ArrayList<String> getAllData(){
+    public ArrayList<String> getAllData() {
         ArrayList<String> result = new ArrayList<>();
         try {
             fileReader = new FileReader(filePath);
             bufferedReader = new BufferedReader(fileReader);
             String rawData;
-
-            // menganalisi tiap baris
-            while((rawData = bufferedReader.readLine()) != null){
+            
+            while ((rawData = bufferedReader.readLine()) != null) {
                 String[] data = rawData.split(",");
-                String movieDetail = String.join(" | ", data[0],data[1]);
-
-                // menambahkan title dan waktu saja
+                String movieDetail= String.join(" | ", data[0], data[1]);
                 result.add(movieDetail);
             }
-
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            return result;
+            try {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public void deleteData(int index) {
+        ArrayList<String> movies = new ArrayList<>();
+        try {
+            fileReader = new FileReader(filePath);
+            bufferedReader = new BufferedReader(fileReader);
+            String movie;
+
+            while ((movie = bufferedReader.readLine()) != null) {
+                movies.add(movie);
+            }
+            
+            // Menghapus data pada index yang diberikan
+            if (index >= 0 && index < movies.size()) {
+                movies.remove(index);
+            } else {
+                System.out.println("Index out of bounds.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // menulis kembali data yang sudah dihapus ke dalam database
+        try {
+            fileWriter = new FileWriter(filePath);
+            bufferedWriter = new BufferedWriter(fileWriter);
+
+            for (String m : movies) {
+                bufferedWriter.write(m);
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.flush();
+            System.out.println("Data deleted successfully");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bufferedWriter != null) {
+                    bufferedWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

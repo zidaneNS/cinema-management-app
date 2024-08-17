@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class OptionMain {
     static Scanner scanner = new Scanner(System.in);
+
     static public int getPerson(){
         
         System.out.println("1.\tAdmin\n2.\tUser");
@@ -19,7 +20,10 @@ public class OptionMain {
     }
     
     static public int getAdminOpt(){
-        System.out.println("1.\tAdd Movie\n2.\tDelete Movie");
+        System.out.println("================");
+        System.out.println("Select number : ");
+        System.out.println("================");
+        System.out.println("1.\tAdd Movie\n2.\tUpdate Movie\n3.\tDelete Movie\n0.\tClose Program");
         System.out.println("What will u modify?");
         
         try {

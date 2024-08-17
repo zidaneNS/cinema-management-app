@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import object.Ticket;
 
-// import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 public class Admin {
@@ -12,13 +11,19 @@ public class Admin {
     static Connect connect = new Connect();
 
     public static void main(String[] args) {
-        System.err.println("Movie Lists : ");
-        for(int i=0; i<connect.getAllData().size(); i++){
-            System.out.println((i+1) + ". " + connect.getAllData().get(i));
-        }
-        new Admin().handleCreate();
+        new Admin().mainMenu();
+        new Admin().handleDelete();
     }
-
+    public void mainMenu(){
+        System.err.println("Movie Lists : ");
+        if(connect.getAllData().size() != 0){
+            for(int i=0; i<connect.getAllData().size(); i++){
+                System.out.println((i+1) + ". " + connect.getAllData().get(i));
+            }
+        } else {
+            System.out.println("There is no movies here, comeback later ;)");
+        }  
+    }
 
     public void handleCreate(){
         System.out.print("Input title : ");
@@ -64,11 +69,14 @@ public class Admin {
             System.out.println("Input number bruh : " + e);
         }
 
-        if ( idDel != -1) {
-            System.out.print("Movie with id : " + idDel + " will be deleted");
-            // delete method will be executed here
+        // checking userInput
+        if(idDel > connect.getAllData().size() || idDel == 0){
+            System.out.println("id is not found !!");
+        } else if ( idDel != -1) {
+            System.out.println("Movie with id : " + idDel + " will be deleted");
+            connect.deleteData(idDel-1);
         } else {
-            System.out.println("Do u understand Endlish ?");
+            System.out.println("Do u understand English ?");
         }
     }
 }
